@@ -1,0 +1,204 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using MonsterLove.StateMachine;
+
+/// <summary>
+/// The base class for all fighters to use
+/// </summary>
+public class Fighter : Actor, IKillable
+{
+    [Header("Data")]
+    [Tooltip("The data for movement and health")]
+    public ActorData actorData;
+    [Header("Input")]
+    public InputActionAsset playerInputAction;
+
+    [Header("Squash & Stretch")]
+    public Transform SpriteHolder; // Reference to the transform of the child object which holds the sprite renderer of the player
+    public Vector2 SpriteScale = Vector2.one; // The current X and Y scale of the sprite holder (used for Squash & Stretch)
+
+    [Header("Animator")]
+    public Animator animator; // Reference to the animator
+
+    [Header("Particles")]
+    public GameObject DustParticle;
+    public GameObject DashDustParticle;
+
+    public StateMachine<States> fsm;
+
+
+    #region Helper private Variables
+    private int moveX; // Variable to store the horizontal Input each frame
+    private int moveY; // Variable to store the vectical Input each frame
+    private int oldMoveY; // Variable to store the vertical Input for the last frame
+    private float varJumpSpeed; // Vertical Speed to apply on each frame of the variable jump
+    private float varJumpTimer = 0f; // Variable to store the time left on the variable jump
+    private int forceMoveX; // Used to store the forced horizontal movement input
+    private float forceMoveXTimer = 0f; // Used to store the time left on the force horizontal movement
+    private float maxFall; // Variable to store the current maximun fall speed
+    private float wallSlideTimer = 0f; // Used to store the time left on the wallslide
+    private Vector2 DashDir; // Here we store the direction in which we are dashing
+    private float dashCooldownTimer = 0f; // Timer to store how much cooldown has the dash
+    private bool canStick = false; // Helper variable for the wall sticking functionality
+    private bool sticking = false; // Variable to store if the player is currently sticking to a wall
+    private float stickTimer = 0f; // Timer to store the time left sticking to a wall 
+    private float jumpGraceTimer = 0f; // Timer to store the time left to perform a jump after leaving a platform/solid
+    private float jumpBufferTimer = 0f; // Timer to store the time left in the JumpBuffer timer
+    private bool jumpIsInsideBuffer = false;
+    private float meleeAttackCooldownTimer = 0f; // Timer to store the cooldown left to use the melee attack
+    private float bowAttackCooldownTimer = 0f; // Timer to store cooldown left on the bow attak
+    private float moveToRespawnPositionAfter = .5f; // Time to wait before moving to the respawn position
+    private float moveToRespawnPosTimer = 0f; // Timer to store how much time is left before moving to the respawn position
+    private float ledgeClimbTime = 1f; // Total time it takes to climb a wall
+    private float ledgeClimbTimer = 0f; // Timer to store the current time passed in the ledgeClimb state
+    private Vector2 extraPosOnClimb = new Vector2(10, 16); // Extra position to add to the current position to the end position of the climb animation matches the start position in idle state
+    #endregion
+
+
+    public enum States
+    {
+        Normal,
+        Walk,
+        Jump,
+        Attack,
+        HitStun,
+        LedgeGrab,
+        LedgeClimb,
+        Respawn
+    }
+
+    public void Die()
+    {
+        // Set the speed to 0
+        Speed = Vector2.zero;
+        // Trigget the respawn state
+        //fsm.ChangeState(States.Respawn, StateTransition.Overwrite);
+        // Trigger the Dead Events on the gamemanager
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.PlayerDead();
+        }
+    }
+
+    new void Awake()
+    {
+        base.Awake();
+        fsm = StateMachine<States>.Initialize(this);
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        fsm.ChangeState(States.Normal);
+        animator.Play("Idle");
+    }
+
+    // Update is called once per frame
+    new void Update()
+    {
+        base.Update();
+
+        if (fsm.State == States.Respawn)
+            return;
+
+        // Update all collisions here
+        wasOnGround = onGround;
+        onGround = OnGround();
+
+        
+    }
+
+    void LateUpdate()
+    {
+        var moveh = base.MoveH(Speed.x * Time.deltaTime);
+        if (moveh)
+        {
+            Speed.x = 0;
+        }
+
+        // Vertical
+        var movev = base.MoveV(Speed.y * Time.deltaTime);
+        if (movev)
+        {
+            Speed.y = 0;
+        }
+    }
+
+    private void Normal_Update()
+    {
+        Speed.x = Calc.Approach(Speed.x, moveX * actorData.MaxRun, actorData.RunReduce * 1 * Time.deltaTime);
+
+        if (!onGround)
+        {
+            float target = actorData.MaxFall;
+            Speed.y = Calc.Approach(Speed.y, target, actorData.Gravity * Time.deltaTime);
+        }
+
+        float num = onGround ? 1f : actorData.AirMult;
+        if (!sticking)
+        {
+            if (Mathf.Abs(Speed.x) > actorData.MaxRun && Mathf.Sign(Speed.x) == moveX)
+            {
+                Speed.x = Calc.Approach(Speed.x, actorData.MaxRun * moveX, actorData.RunReduce * num * Time.deltaTime);
+            }
+            else
+            {
+                Speed.x = Calc.Approach(Speed.x, actorData.MaxRun * moveX, actorData.RunAccel * num * Time.deltaTime);
+            }
+        }
+    }
+
+    private void HitStun_Enter()
+    {
+        animator.Play("HitStun");        
+    }
+    void HitStun_Update()
+    {
+        Speed = Vector2.zero;
+    }
+    private void Normal_Enter()
+    {
+        animator.Play("Idle");
+    }
+
+    public void TakeKnockBack(Vector2 direction, float amount)
+    {
+        fsm.ChangeState(States.HitStun);   
+        StartCoroutine(KnockBack(direction, amount));
+    }
+
+    IEnumerator KnockBack(Vector2 direction, float amount)
+    {
+        Health h = GetComponent<Health>(); //use this to multiply knockback by if using percentage
+        yield return new WaitForSeconds(1);
+        Speed += direction * amount;
+        fsm.ChangeState(States.Normal, StateTransition.Overwrite);
+    }
+
+    IEnumerator WaitBeforeChangingTo(float seconds, States state)
+    {
+        yield return new WaitForSeconds(seconds);
+        fsm.ChangeState(state, StateTransition.Overwrite);
+    }
+
+
+    #region Inputs
+    public void JumpInput(InputAction.CallbackContext context)
+    {
+        var pushed = context.ReadValueAsButton();
+    }
+
+    public void NormalAttackInput(InputAction.CallbackContext context)
+    {
+        fsm.ChangeState(States.Attack);
+    }
+
+    public void MoveInput(InputAction.CallbackContext context)
+    {
+        moveX = (int)context.ReadValue<Vector2>().x;
+        moveY = (int)context.ReadValue<Vector2>().y;
+    }
+    #endregion
+}

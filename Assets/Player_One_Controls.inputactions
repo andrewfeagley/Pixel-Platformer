@@ -1,0 +1,279 @@
+{
+    "name": "Player_One_Controls",
+    "maps": [
+        {
+            "name": "Jump",
+            "id": "b88c5574-fa7a-4be8-8611-aea23f5fabea",
+            "actions": [
+                {
+                    "name": "JumpPressDown",
+                    "type": "Button",
+                    "id": "6f7e9f4f-9037-442e-8bac-0c9c7f25488e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ff971f1d-bb29-4746-9673-0e37569d40c8",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Basic",
+                    "action": "JumpPressDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "09593635-d56d-4de1-a636-4c465a8d3da8",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Basic",
+                    "action": "JumpPressDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Dash",
+            "id": "4677862c-1852-48ff-9b42-7c409f7d60b0",
+            "actions": [
+                {
+                    "name": "DashPressDown",
+                    "type": "Button",
+                    "id": "7b1eb81b-9e10-42e4-a9c2-1cfa295fca13",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "228d78c8-b35f-4aac-8fa2-fab4f0078bab",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Basic",
+                    "action": "DashPressDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3fa7145e-f37c-41aa-9aa7-ff65a3c0d549",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Basic",
+                    "action": "DashPressDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "CombinedAxis",
+            "id": "469759fe-bc47-4c49-ae70-263420a5301c",
+            "actions": [
+                {
+                    "name": "KeyboardHeld",
+                    "type": "Value",
+                    "id": "b73979e0-9579-4017-872e-a6cfb4d1d3fa",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "Hold"
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "Keyboard",
+                    "id": "d6e72278-00fc-4d34-8f62-4b5e2b4cbc26",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "KeyboardHeld",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "2bbaf768-640f-4891-93f6-6e8e87a170cc",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Basic",
+                    "action": "KeyboardHeld",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "94d58061-369f-4855-a024-aa8ff4d7e35a",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Basic",
+                    "action": "KeyboardHeld",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "8ab6caa4-46cf-4942-bab5-3729ca66542e",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Basic",
+                    "action": "KeyboardHeld",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "492521ab-fe66-4ca0-891c-b9adbc466b34",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Basic",
+                    "action": "KeyboardHeld",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "DPad",
+                    "id": "c03e2cd2-930f-489f-8ae4-57aaf37ba051",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "KeyboardHeld",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "9cbb2736-03e3-4f78-a426-d5472620a1d3",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Basic",
+                    "action": "KeyboardHeld",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "fdbf8dd4-484a-441a-a944-a5c4b244acb9",
+                    "path": "<Gamepad>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Basic",
+                    "action": "KeyboardHeld",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "785e5ce8-aaa0-4254-a0c2-22842d3a30f1",
+                    "path": "<Gamepad>/dpad/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Basic",
+                    "action": "KeyboardHeld",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "5d3d5386-8c86-4d2f-a422-312b7c026c5f",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Basic",
+                    "action": "KeyboardHeld",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        },
+        {
+            "name": "Attack",
+            "id": "df8dee4d-2f44-4a69-a5a2-9e7ff3ce6d65",
+            "actions": [
+                {
+                    "name": "AttackPushed",
+                    "type": "Button",
+                    "id": "8c8b71fa-9272-46f1-87a5-f246b965720b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "Button With One Modifier",
+                    "id": "05487311-7700-4a1b-ae33-c183b558d83d",
+                    "path": "ButtonWithOneModifier",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AttackPushed",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "fec4d58f-8e2d-4485-9445-d958a89d6fa2",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AttackPushed",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "button",
+                    "id": "424cbc47-4dd2-42f4-a207-1d524322a416",
+                    "path": "*/{PrimaryTrigger}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AttackPushed",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Basic",
+            "bindingGroup": "Basic",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Gamepad>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Mouse>",
+                    "isOptional": true,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}

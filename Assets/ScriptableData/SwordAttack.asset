@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1e575260d6bea74fa62b78872b55dd7, type: 3}
+  m_Name: SwordAttack
+  m_EditorClassIdentifier: 
+  collider: {fileID: 4739247498791742058, guid: 8f1874d1fe2087a49acfc5c039f565dd,
+    type: 3}
+  DamageAmount: 1
+  KnockBackVector: {x: 5, y: 5}
+  KnockBackAmount: 300
+  HitStunAmount: 2
+  AnimationClip: {fileID: 7400000, guid: 0d5df31c65dc06b43b4b1ea60a2786fc, type: 2}
