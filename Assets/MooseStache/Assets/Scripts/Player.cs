@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using MonsterLove.StateMachine;
 
-public class Player : Actor, IKillable
+public class Player : Actor, IKillable, IHittable
 {
 	[Header("Data")]
 	[Tooltip("The data for movement and health")]
@@ -118,7 +118,7 @@ public class Player : Actor, IKillable
 		get
 		{
 			//return Input.GetButtonDown("Dash") && dashCooldownTimer <= 0f;
-			return (DashRequested || Input.GetButtonDown("Dash")) && dashCooldownTimer <= 0f;
+			return (Input.GetButtonDown("Dash")) && dashCooldownTimer <= 0f;
 		}
 	}
 
@@ -159,7 +159,8 @@ public class Player : Actor, IKillable
 		LedgeGrab,
 		LedgeClimb,
 		Attack,
-		BowAttack
+		BowAttack,
+		Knocked
 	}
 
 	// State Machine
@@ -1045,20 +1046,14 @@ public class Player : Actor, IKillable
 		}
 	}
 
-	bool DashRequested = false;
-	public void OnDash(InputAction.CallbackContext context)
-    {
-		DashRequested = context.performed;
-    }
-
-	public void OnJump(InputAction.CallbackContext context)
-    {
-		JumpHeld = context.ReadValue<float>();
-		bool result = context.action.triggered;
-		JumpRequested = result;
-		if (JumpRequested)
-			jumpBufferTimer = actorData.JumpBufferTime;
+	public void TakeKnockBackAndHitStun(Vector2 a, float b, float t)
+	{
+		fsm.ChangeState(States.Knocked, StateTransition.Overwrite);
+		StartCoroutine(HitStun(a, b, t));
 	}
-	bool JumpRequested;
-	float JumpHeld;
+
+    public IEnumerator HitStun(Vector2 direction, float amount, float t)
+    {
+        yield return new WaitForSeconds(t);
+    }
 }

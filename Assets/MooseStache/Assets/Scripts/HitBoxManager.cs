@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HitBoxManager : MonoBehaviour {
+public class HitBoxManager : MonoBehaviour
+{
 
 	public AttackData CurrentAttack;
 	// Set these in the editor
-	public PolygonCollider2D attack1;
+	public PolygonCollider2D attack1; //may be unnecessary
 
 	// Used for organization
 	private PolygonCollider2D[] colliders;
@@ -108,9 +109,9 @@ public class HitBoxManager : MonoBehaviour {
 			float distance = Vector2.Distance(component.transform.position, owner.transform.position);
 			//this should get knockback vector from the attackdata for the corresponding attack
 			//Use a string to match the attackdata to the hitbox enum value name?
-			var knock = component.TakeKnockBack(new Vector2(CurrentAttack.KnockBackVector.x * (int)ActorComponent.Facing, CurrentAttack.KnockBackVector.y) * distance, CurrentAttack.KnockBackAmount);
+			var knock = component.TakeKnockBack(new Vector2(CurrentAttack.KnockBackVector.x * (int)ActorComponent.Facing, CurrentAttack.KnockBackVector.y) * distance, CurrentAttack.KnockBackAmount, CurrentAttack.HitStunAmount);
 
-			if(knock)
+			if (knock)
             {
 				knockablesDamaged.Add(component);
             }

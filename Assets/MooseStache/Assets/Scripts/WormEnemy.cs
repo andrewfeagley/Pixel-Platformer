@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MonsterLove.StateMachine;
 
-public class WormEnemy : Actor, IKillable
+public class WormEnemy : Actor, IKillable, IHittable
 {
 	Knockable k;
 
@@ -238,11 +238,11 @@ public class WormEnemy : Actor, IKillable
 	/// </summary>
 	/// <param name="a"></param>
 	/// <param name="b"></param>
-	public void EnterHitStun(Vector2 a, float b)
-    {
-		fsm.ChangeState(States.Knocked, StateTransition.Overwrite);
-		StartCoroutine(HitStun(a,b));
-	}
+	//public void EnterHitStun(Vector2 a, float b)
+ //   {
+	//	fsm.ChangeState(States.Knocked, StateTransition.Overwrite);
+	//	StartCoroutine(HitStun(a,b));
+	//}
 
 	/// <summary>
 	/// The amount of time should be calculated based on the amount of health/percentage damage of actor and the force of the attack
@@ -250,13 +250,29 @@ public class WormEnemy : Actor, IKillable
 	/// <param name="a"></param>
 	/// <param name="b"></param>
 	/// <returns></returns>
-	IEnumerator HitStun(Vector2 a, float b)
+	//IEnumerator HitStun(Vector2 a, float b)
+ //   {
+	//	yield return new WaitForSeconds(1);
+	//	Speed += a * b;
+	//	if (GetComponent<Health>().currentHealth <= 0)
+	//		fsm.ChangeState(States.Death);
+	//	else
+	//		fsm.ChangeState(States.Normal);
+ //   }
+
+    public void TakeKnockBackAndHitStun(Vector2 direction, float damageAmount, float time)
     {
-		yield return new WaitForSeconds(1);
-		Speed += a * b;
+		fsm.ChangeState(States.Knocked, StateTransition.Overwrite);
+		StartCoroutine(HitStun(direction, damageAmount, time));
+	}
+
+    public IEnumerator HitStun(Vector2 direction, float damageAmount, float time)
+    {
+		yield return new WaitForSeconds(time);
+		Speed += direction * damageAmount;
 		if (GetComponent<Health>().currentHealth <= 0)
 			fsm.ChangeState(States.Death);
 		else
 			fsm.ChangeState(States.Normal);
-    }
+	}
 }

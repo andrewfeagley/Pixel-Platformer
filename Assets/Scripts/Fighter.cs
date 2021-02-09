@@ -13,7 +13,7 @@ public class Fighter : Actor, IKillable
     [Tooltip("The data for movement and health")]
     public ActorData actorData;
     [Header("Input")]
-    public InputActionAsset playerInputAction;
+    public Player_One_Controls controls;
 
     [Header("Squash & Stretch")]
     public Transform SpriteHolder; // Reference to the transform of the child object which holds the sprite renderer of the player
@@ -69,6 +69,15 @@ public class Fighter : Actor, IKillable
         Respawn
     }
 
+    public bool CanAttack
+	{
+		get
+		{
+			return controls.Fight.Attack0.triggered && meleeAttackCooldownTimer <= 0f;
+		}
+	}
+
+
     public void Die()
     {
         // Set the speed to 0
@@ -82,10 +91,22 @@ public class Fighter : Actor, IKillable
         }
     }
 
+    private void OnEnable()
+    {
+        controls.Enable();
+    }
+
+    private void OnDisable()
+    {
+        controls.Disable();
+    }
+
     new void Awake()
     {
         base.Awake();
         fsm = StateMachine<States>.Initialize(this);
+        if (controls == null)
+            controls = new Player_One_Controls();
     }
 
     // Start is called before the first frame update
@@ -107,7 +128,19 @@ public class Fighter : Actor, IKillable
         wasOnGround = onGround;
         onGround = OnGround();
 
-        
+        if (forceMoveXTimer > 0f)
+        {
+            forceMoveXTimer -= Time.deltaTime;
+            moveX = forceMoveX;
+        }
+        else
+        {
+            moveX = (int)controls.Fight.Move.ReadValue<Vector2>().x;//(int)Input.GetAxisRaw("Horizontal");
+        }
+
+        // Update the moveY Variable and assign the current vertical input for this frame 
+        oldMoveY = moveY;
+        moveY = (int)controls.Fight.Move.ReadValue<Vector2>().y;//(int)Input.GetAxisRaw("Vertical");
     }
 
     void LateUpdate()
@@ -124,6 +157,13 @@ public class Fighter : Actor, IKillable
         {
             Speed.y = 0;
         }
+
+        // Set the x scale to the current facing direction
+        var targetLocalScale = new Vector3((int)Facing, transform.localScale.y, transform.localScale.z);
+        if (transform.localScale != targetLocalScale)
+        {
+            transform.localScale = new Vector3((int)Facing, transform.localScale.y, transform.localScale.z);
+        }
     }
 
     private void Normal_Update()
@@ -135,6 +175,15 @@ public class Fighter : Actor, IKillable
             float target = actorData.MaxFall;
             Speed.y = Calc.Approach(Speed.y, target, actorData.Gravity * Time.deltaTime);
         }
+
+        if (moveX != 0)
+        {
+            Facings facings = (Facings)moveX;
+            Facing = facings;
+        }
+
+        if (CanAttack)
+            fsm.ChangeState(States.Attack);
 
         float num = onGround ? 1f : actorData.AirMult;
         if (!sticking)
@@ -163,13 +212,26 @@ public class Fighter : Actor, IKillable
         animator.Play("Idle");
     }
 
-    public void TakeKnockBack(Vector2 direction, float amount)
+    private void Attack_Enter()
     {
-        fsm.ChangeState(States.HitStun);   
-        StartCoroutine(KnockBack(direction, amount));
+        Speed.x = 0;
+        animator.Play("Jab 0");
+        Debug.Log("Player has enterd attack mode");
     }
 
-    IEnumerator KnockBack(Vector2 direction, float amount)
+
+    private void Attack_Update()
+    {
+        Speed.x = 0;
+    }
+
+    public void TakeKnockBackAndHitStun(Vector2 direction, float amount, float time)
+    {
+        fsm.ChangeState(States.HitStun);   
+        StartCoroutine(HitStun(direction, amount, time));
+    }
+
+    IEnumerator HitStun(Vector2 direction, float amount, float time)
     {
         Health h = GetComponent<Health>(); //use this to multiply knockback by if using percentage
         yield return new WaitForSeconds(1);

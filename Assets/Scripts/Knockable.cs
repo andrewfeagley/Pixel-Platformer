@@ -6,6 +6,7 @@ using System;
 public class Knockable : MonoBehaviour
 {
     public KnockBackEvent OnTakeKnockBackEvent;
+    public TimedKnockBackEvent OnTakeKnockBackTimedEvent;
 
     private Actor owner;
     //Should percentage be on Knockable or on another script?
@@ -32,9 +33,21 @@ public class Knockable : MonoBehaviour
         OnTakeKnockBackEvent.Invoke(direction, amount);
         return true;
     }
+    public bool TakeKnockBack(Vector2 direction, float amount, float time)
+    {
+        Debug.Log("I was knocked for: " + amount.ToString());
+        direction.Normalize();
+        OnTakeKnockBackTimedEvent.Invoke(direction, amount, 1);
+        return true;
+    }
 }
 [Serializable]
 public class KnockBackEvent : UnityEvent<Vector2, float>
+{
+
+}
+[Serializable]
+public class TimedKnockBackEvent : UnityEvent<Vector2, float, float>
 {
 
 }
