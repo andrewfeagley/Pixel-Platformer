@@ -188,6 +188,7 @@ public class Fighter : Actor, IKillable
     public void JumpInput(InputAction.CallbackContext context)
     {
         var pushed = context.ReadValueAsButton();
+        Debug.Log("Jump was just pressed");
     }
 
     public void NormalAttackInput(InputAction.CallbackContext context)
