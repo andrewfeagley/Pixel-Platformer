@@ -27,6 +27,7 @@ public class Fighter : Actor, IKillable
     public GameObject DashDustParticle;
 
     public StateMachine<States> fsm;
+    public HitBoxManager hitboxManager;
 
 
     #region Helper private Variables
@@ -77,6 +78,14 @@ public class Fighter : Actor, IKillable
 		}
 	}
 
+    public bool CanJump
+    {
+        get
+        {
+            return controls.Fight.JumpPressDown.triggered;
+        }
+    }
+
 
     public void Die()
     {
@@ -104,6 +113,7 @@ public class Fighter : Actor, IKillable
     new void Awake()
     {
         base.Awake();
+        hitboxManager = GetComponentInChildren<HitBoxManager>();
         fsm = StateMachine<States>.Initialize(this);
         if (controls == null)
             controls = new Player_One_Controls();
@@ -156,6 +166,51 @@ public class Fighter : Actor, IKillable
         if (movev)
         {
             Speed.y = 0;
+        }
+
+        UpdateSprite();
+    }
+
+    private void UpdateSprite()
+    {
+        string currentAttackName = hitboxManager != null ? hitboxManager.CurrentAttack.AnimationClip.name : "Jab 0";
+        //Put all logic for each state here
+        switch (fsm.State)
+        {
+            //Needs to be able to get the name of the current attack
+            //and set the animator to play the animation of the desired attack
+            case States.Attack:
+                if (!animator.GetCurrentAnimatorStateInfo(0).IsName(currentAttackName))
+                    animator.Play(currentAttackName);
+                break;
+            case States.Normal:
+                if (onGround)
+                {
+                    if (moveX == 0)
+                    {
+                        // Idle Animation
+                        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+                        {
+                            animator.Play("Idle");
+                        }
+                    } else
+                    {
+                        // Run Animation
+                        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Run"))
+                        {
+                            animator.Play("Walk");
+                        }
+                    }
+                }
+                break;
+        }
+        if (Speed.y > 0)
+        {
+            // Jump Animation
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
+            {
+                animator.Play("Jump");
+            }
         }
 
         // Set the x scale to the current facing direction
@@ -247,21 +302,21 @@ public class Fighter : Actor, IKillable
 
 
     #region Inputs
-    public void JumpInput(InputAction.CallbackContext context)
-    {
-        var pushed = context.ReadValueAsButton();
-        Debug.Log("Jump was just pressed");
-    }
+    //public void JumpInput(InputAction.CallbackContext context)
+    //{
+    //    var pushed = context.ReadValueAsButton();
+    //    Debug.Log("Jump was just pressed");
+    //}
 
     public void NormalAttackInput(InputAction.CallbackContext context)
     {
         fsm.ChangeState(States.Attack);
     }
 
-    public void MoveInput(InputAction.CallbackContext context)
-    {
-        moveX = (int)context.ReadValue<Vector2>().x;
-        moveY = (int)context.ReadValue<Vector2>().y;
-    }
+    //public void MoveInput(InputAction.CallbackContext context)
+    //{
+    //    moveX = (int)context.ReadValue<Vector2>().x;
+    //    moveY = (int)context.ReadValue<Vector2>().y;
+    //}
     #endregion
 }

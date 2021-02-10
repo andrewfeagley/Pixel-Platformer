@@ -19,3 +19,4 @@ MonoBehaviour:
   KnockBackAmount: 300
   HitStunAmount: 2
   AnimationClip: {fileID: 7400000, guid: 0d5df31c65dc06b43b4b1ea60a2786fc, type: 2}
+  AttackName: Attack

@@ -12,4 +12,5 @@ public class AttackData : ScriptableObject
     public float HitStunAmount;
 
     public AnimationClip AnimationClip;
+    public string AttackName;
 }

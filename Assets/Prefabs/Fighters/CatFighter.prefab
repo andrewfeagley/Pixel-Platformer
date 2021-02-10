@@ -206,18 +206,7 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3631305729080885521}
-        m_MethodName: JumpInput
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 6f7e9f4f-9037-442e-8bac-0c9c7f25488e
     m_ActionName: Fight/JumpPressDown[/Keyboard/space]
   - m_PersistentCalls:
@@ -391,8 +380,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 600b60c587609864c9e6a8f2e9f7f3f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentAttack: {fileID: 0}
-  attack1: {fileID: 0}
+  CurrentAttack: {fileID: 11400000, guid: b0eed86f87f033048a2d6c2b59e2bce3, type: 2}
+  attack1: {fileID: 150803338406516631}
   owner: {fileID: 98152203858192231}
 --- !u!1001 &4881729442910082536
 PrefabInstance:
@@ -476,6 +465,12 @@ PrefabInstance:
 --- !u!4 &1220980366455632615 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6002920332378826511, guid: c72a2228ed03f8744b63e8724ed6bd91,
+    type: 3}
+  m_PrefabInstance: {fileID: 4881729442910082536}
+  m_PrefabAsset: {fileID: 0}
+--- !u!60 &150803338406516631 stripped
+PolygonCollider2D:
+  m_CorrespondingSourceObject: {fileID: 4731209280572703359, guid: c72a2228ed03f8744b63e8724ed6bd91,
     type: 3}
   m_PrefabInstance: {fileID: 4881729442910082536}
   m_PrefabAsset: {fileID: 0}

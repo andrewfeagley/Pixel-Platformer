@@ -19,3 +19,4 @@ MonoBehaviour:
   KnockBackAmount: 50
   HitStunAmount: 0.1
   AnimationClip: {fileID: 7400000, guid: 1a92c0bbf85c0b9449bb94b02fb979de, type: 2}
+  AttackName: Jab 0
