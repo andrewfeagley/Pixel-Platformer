@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -46,10 +46,17 @@ public class ActorData : ScriptableObject
 
     [Range(1,100)]
     public int maxHealth;
-    [Tooltip("Pixels per second")]
-    public float Speed;
 
+	[Header("Animator")]
+	public RuntimeAnimatorController fighterAnimator;
 
-    public List<AttackData> attackDatas;
+	[Header("Colliders")]
+	public Collider2D fighterCollider;
 
+	//Should I have these in a list or have each attack be separate variables for easier calling?
+	[Header("Attack Data")]
+	public List<AttackData> JabAttackData;
+    public List<AttackData> TiltAttackData;
+	public List<AttackData> AerialAttackData;
+	public List<AttackData> SpecialAttackData;
 }

@@ -1055,5 +1055,6 @@ public class Player : Actor, IKillable, IHittable
     public IEnumerator HitStun(Vector2 direction, float amount, float t)
     {
         yield return new WaitForSeconds(t);
+		fsm.ChangeState(States.Normal, StateTransition.Overwrite);
     }
 }

@@ -41,5 +41,7 @@ MonoBehaviour:
   Name: SwordGuy
   maxHealth: 100
   Speed: 0
-  attackDatas:
-  - {fileID: 11400000, guid: 7175b30b3077a9343b49e98cc43807cd, type: 2}
+  JabAttackData: []
+  TiltAttackData: []
+  AerialAttackData: []
+  SpecialAttackData: []

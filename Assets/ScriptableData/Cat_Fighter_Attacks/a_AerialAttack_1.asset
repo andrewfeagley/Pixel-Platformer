@@ -10,13 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c1e575260d6bea74fa62b78872b55dd7, type: 3}
-  m_Name: a_JabAttack
+  m_Name: a_AerialAttack_1
   m_EditorClassIdentifier: 
-  collider: {fileID: 4731209280572703359, guid: c72a2228ed03f8744b63e8724ed6bd91,
-    type: 3}
-  DamageAmount: 5
-  KnockBackVector: {x: 20, y: 2}
-  KnockBackAmount: 50
-  HitStunAmount: 0.1
-  AnimationClip: {fileID: 7400000, guid: 1a92c0bbf85c0b9449bb94b02fb979de, type: 2}
-  AttackName: Jab 0
+  collider: {fileID: 0}
+  DamageAmount: 0
+  KnockBackVector: {x: 0, y: 0}
+  KnockBackAmount: 0
+  HitStunAmount: 0
+  AnimationClip: {fileID: 7400000, guid: 68f8b226e8157844ca37b3b4db7203ed, type: 2}
+  AttackName: 

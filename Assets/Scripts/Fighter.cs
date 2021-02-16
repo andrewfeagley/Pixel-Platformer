@@ -70,6 +70,35 @@ public class Fighter : Actor, IKillable
         Respawn
     }
 
+    public bool CanGroundAttack
+    {
+        get => controls.Fight.Attack0.triggered && meleeAttackCooldownTimer <= 0f && onGround;
+    }
+
+    public bool ShouldJabAttack
+    {
+        get
+        {
+            return CanGroundAttack && controls.Fight.Move.ReadValue<Vector2>().x == 0;
+        }
+    }
+
+    public bool ShouldTiltAttack
+    {
+        get
+        {
+            return CanGroundAttack && controls.Fight.Move.ReadValue<Vector2>().x != 0;
+        }
+    }
+
+    public bool ShouldSpecialAttack
+    {
+        get
+        {
+            return controls.Fight.Attack1.triggered;
+        }
+    }
+
     public bool CanAttack
 	{
 		get
@@ -151,6 +180,13 @@ public class Fighter : Actor, IKillable
         // Update the moveY Variable and assign the current vertical input for this frame 
         oldMoveY = moveY;
         moveY = (int)controls.Fight.Move.ReadValue<Vector2>().y;//(int)Input.GetAxisRaw("Vertical");
+
+
+        //Melee Attack timer
+        if (meleeAttackCooldownTimer > 0f)
+        {
+            meleeAttackCooldownTimer -= Time.deltaTime;
+        }
     }
 
     void LateUpdate()
@@ -173,15 +209,15 @@ public class Fighter : Actor, IKillable
 
     private void UpdateSprite()
     {
-        string currentAttackName = hitboxManager != null ? hitboxManager.CurrentAttack.AnimationClip.name : "Jab 0";
+        //string currentAttackName = hitboxManager.CurrentAttack.AnimationClip.name != null ? hitboxManager.CurrentAttack.AnimationClip.name : "Jab 0";
         //Put all logic for each state here
         switch (fsm.State)
         {
             //Needs to be able to get the name of the current attack
             //and set the animator to play the animation of the desired attack
             case States.Attack:
-                if (!animator.GetCurrentAnimatorStateInfo(0).IsName(currentAttackName))
-                    animator.Play(currentAttackName);
+                if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Jab 0"))
+                    animator.Play("Jab 0");
                 break;
             case States.Normal:
                 if (onGround)

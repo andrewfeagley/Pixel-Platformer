@@ -6344,7 +6344,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_NotificationBehavior: 0
-  m_MaxPlayerCount: -1
+  m_MaxPlayerCount: 4
   m_AllowJoining: 1
   m_JoinBehavior: 0
   m_PlayerJoinedEvent:
@@ -6356,15 +6356,16 @@ MonoBehaviour:
   m_JoinAction:
     m_UseReference: 0
     m_Action:
-      m_Name: 
+      m_Name: Join
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 
+      m_Id: 77e5fa3d-9cd1-456c-8aa2-e27b174f24d7
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
     m_Reference: {fileID: 0}
-  m_PlayerPrefab: {fileID: 990810586}
+  m_PlayerPrefab: {fileID: 3631305729080885527, guid: 41052b25bab5d124c9f91cb4a7aa012d,
+    type: 3}
   m_SplitScreen: 0
   m_MaintainAspectRatioInSplitScreen: 0
   m_FixedNumberOfSplitScreens: -1
@@ -8649,6 +8650,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ac229764695bf247bec6fc4f0562d6d, type: 3}
+--- !u!114 &469103176 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2642014166240108665, guid: 5cd065dd8d7c19c4389a611bf93b5967,
+    type: 3}
+  m_PrefabInstance: {fileID: 3631305728460558541}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 600b60c587609864c9e6a8f2e9f7f3f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &473616638 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4173400865839880, guid: 4ac229764695bf247bec6fc4f0562d6d,
@@ -15650,6 +15663,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 295456833}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &839438054 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1554599907335618, guid: 8f39570a667927346a089b812a87f91d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1213534130}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &841232309
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19953,12 +19972,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 259750698}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &990810586 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3631305729080885527, guid: 5cd065dd8d7c19c4389a611bf93b5967,
-    type: 3}
-  m_PrefabInstance: {fileID: 3631305728460558541}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &990810587 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3631305729080885526, guid: 5cd065dd8d7c19c4389a611bf93b5967,
@@ -23245,6 +23258,10 @@ PrefabInstance:
     - target: {fileID: 1554599907335618, guid: 8f39570a667927346a089b812a87f91d, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 1554599907335618, guid: 8f39570a667927346a089b812a87f91d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4636917548447404, guid: 8f39570a667927346a089b812a87f91d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -27410,6 +27427,16 @@ PrefabInstance:
         type: 3}
       propertyPath: OnPlayerDeadEvents.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: Shake
+      objectReference: {fileID: 0}
+    - target: {fileID: 114690177284801058, guid: e19b44bba19e21c46b13e2d6811a844e,
+        type: 3}
+      propertyPath: OnPlayerRespawnEvents.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 839438054}
+    - target: {fileID: 114690177284801058, guid: e19b44bba19e21c46b13e2d6811a844e,
+        type: 3}
+      propertyPath: OnPlayerRespawnEvents.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e19b44bba19e21c46b13e2d6811a844e, type: 3}
@@ -39028,6 +39055,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: b0eed86f87f033048a2d6c2b59e2bce3,
         type: 2}
+    - target: {fileID: 3631305729080885521, guid: 5cd065dd8d7c19c4389a611bf93b5967,
+        type: 3}
+      propertyPath: hitboxManager
+      value: 
+      objectReference: {fileID: 469103176}
     - target: {fileID: 3631305729080885526, guid: 5cd065dd8d7c19c4389a611bf93b5967,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -39087,6 +39119,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CatFighter
+      objectReference: {fileID: 0}
+    - target: {fileID: 3631305729080885527, guid: 5cd065dd8d7c19c4389a611bf93b5967,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5cd065dd8d7c19c4389a611bf93b5967, type: 3}

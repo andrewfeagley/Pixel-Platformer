@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a158b21623aab1b4a96ef985630365b2, type: 3}
+  m_Name: CatFighterData
+  m_EditorClassIdentifier: 
+  Gravity: 900
+  MaxFall: -160
+  FastFall: -240
+  MaxRun: 90
+  RunAccel: 1000
+  RunReduce: 400
+  AirMult: 0.65
+  JumpSpeed: 135
+  JumpHBoost: 40
+  VariableJumpTime: 0.2
+  SpringJumpSpeed: 275
+  SpringJumpVariableTime: 0.05
+  WallJumpForceTime: 0.16
+  WallJumpHSpeed: 130
+  WallJumpCheckDist: 2
+  WallSlideStartMax: -20
+  WallSlideTime: 1.2
+  DashSpeed: 240
+  EndDashSpeed: 160
+  EndDashUpMult: 0.75
+  DashTime: 0.15
+  DashCooldown: 0.4
+  clingTime: 0.125
+  JumpGraceTime: 0.1
+  JumpBufferTime: 0.1
+  LadderClimbSpeed: 60
+  Name: Cat
+  maxHealth: 1
+  fighterAnimator: {fileID: 9100000, guid: 2c73bab33366a8643943f2641d98e266, type: 2}
+  fighterCollider: {fileID: 0}
+  JabAttackData:
+  - {fileID: 11400000, guid: b0eed86f87f033048a2d6c2b59e2bce3, type: 2}
+  - {fileID: 11400000, guid: f978a9b221e6fad44948dc2be7ca73f4, type: 2}
+  - {fileID: 11400000, guid: dcbb8e551cb50c14297a0926fdaeea2c, type: 2}
+  TiltAttackData:
+  - {fileID: 11400000, guid: 7de7589e48f843a4ba385c5e425c2897, type: 2}
+  - {fileID: 11400000, guid: 86d837e8fb835fe48a1b180369ee994a, type: 2}
+  - {fileID: 11400000, guid: c93265db5d8fc6b46a9bb19ec3fb99ef, type: 2}
+  AerialAttackData:
+  - {fileID: 11400000, guid: 6a606b2edd3c18c4cbfdbcf85ffa48a8, type: 2}
+  - {fileID: 11400000, guid: 4887a4cedafe00548aaf253a662b5158, type: 2}
+  - {fileID: 11400000, guid: d8c5714f5719e98479711d10a3e2f7c1, type: 2}
+  SpecialAttackData:
+  - {fileID: 11400000, guid: e70c34461ec260d499dedd2f85abcf9b, type: 2}
+  - {fileID: 11400000, guid: 7b53525edac411944bc28a5e7febb798, type: 2}
+  - {fileID: 11400000, guid: d5b407d66a56e944ba5b1ab881b105b5, type: 2}
